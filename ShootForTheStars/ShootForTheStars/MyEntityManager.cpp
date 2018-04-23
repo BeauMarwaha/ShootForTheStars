@@ -828,3 +828,22 @@ void Simplex::MyEntityManager::UsePhysicsSolver(bool a_bUse, uint a_uIndex)
 
 	return m_mEntityArray[a_uIndex]->UsePhysicsSolver(a_bUse);
 }
+void Simplex::MyEntityManager::RemoveOldBullets(float a_fTimeSinceStart)
+{
+	// Remove bullets after a certain period of time
+	std::string prefix = "Bullet";
+
+	for (uint i = 0; i < m_uEntityCount; i++)
+	{
+		// Check to see if this object is a bullet
+		if (m_mEntityArray[i]->GetUniqueID().compare(0, prefix.size(), prefix) == 0)
+		{
+			// Check to see if the current time exceeds the current lifetime of the bullet
+			if (a_fTimeSinceStart > m_mEntityArray[i]->m_fTimeWhenShot + m_fBulletLifetime)
+			{
+				// If so remove the bullet from the game
+				RemoveEntity(i);
+			}
+		}
+	}
+}

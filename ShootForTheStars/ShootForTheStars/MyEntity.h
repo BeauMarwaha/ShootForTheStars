@@ -33,6 +33,8 @@ class MyEntity
 	MySolver* m_pSolver = nullptr; //Physics MySolver
 
 public:
+	float m_fTimeWhenShot = 0.0f; // Time when the bullet was shot
+
 	/*
 	Usage: Constructor that specifies the name attached to the MyEntity
 	Arguments:

@@ -4,8 +4,8 @@ using namespace Simplex;
 void MyRigidBody::Init(void)
 {
 	m_pMeshMngr = MeshManager::GetInstance();
-	m_bVisibleBS = false;
-	m_bVisibleOBB = true;
+	m_bVisibleBS = true;
+	m_bVisibleOBB = false;
 	m_bVisibleARBB = false;
 
 	m_fRadius = 0.0f;
@@ -289,41 +289,51 @@ bool MyRigidBody::IsColliding(MyRigidBody* const other)
 {
 	//check if spheres are colliding
 	bool bColliding = true;
-	//bColliding = (glm::distance(GetCenterGlobal(), other->GetCenterGlobal()) < m_fRadius + other->m_fRadius);
-	//if they are check the Axis Aligned Bounding Box
+	bColliding = (glm::distance(GetCenterGlobal(), other->GetCenterGlobal()) < m_fRadius + other->m_fRadius);
 	if (bColliding) //they are colliding with bounding sphere
 	{
-		if (this->m_v3MaxG.x < other->m_v3MinG.x) //this to the right of other
-			bColliding = false;
-		if (this->m_v3MinG.x > other->m_v3MaxG.x) //this to the left of other
-			bColliding = false;
-
-		if (this->m_v3MaxG.y < other->m_v3MinG.y) //this below of other
-			bColliding = false;
-		if (this->m_v3MinG.y > other->m_v3MaxG.y) //this above of other
-			bColliding = false;
-
-		if (this->m_v3MaxG.z < other->m_v3MinG.z) //this behind of other
-			bColliding = false;
-		if (this->m_v3MinG.z > other->m_v3MaxG.z) //this in front of other
-			bColliding = false;
-
-		if (bColliding) //they are colliding with bounding box also
-		{
-			this->AddCollisionWith(other);
-			other->AddCollisionWith(this);
-		}
-		else //they are not colliding with bounding box
-		{
-			this->RemoveCollisionWith(other);
-			other->RemoveCollisionWith(this);
-		}
+		this->AddCollisionWith(other);
+		other->AddCollisionWith(this);
 	}
 	else //they are not colliding with bounding sphere
 	{
 		this->RemoveCollisionWith(other);
 		other->RemoveCollisionWith(this);
 	}
+	//if they are check the Axis Aligned Bounding Box // Using bounding sphere for this project
+	//if (bColliding) //they are colliding with bounding sphere
+	//{
+	//	if (this->m_v3MaxG.x < other->m_v3MinG.x) //this to the right of other
+	//		bColliding = false;
+	//	if (this->m_v3MinG.x > other->m_v3MaxG.x) //this to the left of other
+	//		bColliding = false;
+
+	//	if (this->m_v3MaxG.y < other->m_v3MinG.y) //this below of other
+	//		bColliding = false;
+	//	if (this->m_v3MinG.y > other->m_v3MaxG.y) //this above of other
+	//		bColliding = false;
+
+	//	if (this->m_v3MaxG.z < other->m_v3MinG.z) //this behind of other
+	//		bColliding = false;
+	//	if (this->m_v3MinG.z > other->m_v3MaxG.z) //this in front of other
+	//		bColliding = false;
+
+	//	if (bColliding) //they are colliding with bounding box also
+	//	{
+	//		this->AddCollisionWith(other);
+	//		other->AddCollisionWith(this);
+	//	}
+	//	else //they are not colliding with bounding box
+	//	{
+	//		this->RemoveCollisionWith(other);
+	//		other->RemoveCollisionWith(this);
+	//	}
+	//}
+	//else //they are not colliding with bounding sphere
+	//{
+	//	this->RemoveCollisionWith(other);
+	//	other->RemoveCollisionWith(this);
+	//}
 	return bColliding;
 }
 
@@ -332,9 +342,9 @@ void MyRigidBody::AddToRenderList(void)
 	if (m_bVisibleBS)
 	{
 		if (m_uCollidingCount > 0)
-			m_pMeshMngr->AddWireSphereToRenderList(glm::translate(m_m4ToWorld, m_v3CenterL) * glm::scale(vector3(m_fRadius)), C_BLUE_CORNFLOWER);
+			m_pMeshMngr->AddWireSphereToRenderList(glm::translate(m_m4ToWorld, m_v3CenterL) * glm::scale(vector3(m_fRadius / 1.5)), m_v3ColorColliding);
 		else
-			m_pMeshMngr->AddWireSphereToRenderList(glm::translate(m_m4ToWorld, m_v3CenterL) * glm::scale(vector3(m_fRadius)), C_BLUE_CORNFLOWER);
+			m_pMeshMngr->AddWireSphereToRenderList(glm::translate(m_m4ToWorld, m_v3CenterL) * glm::scale(vector3(m_fRadius / 1.5)), m_v3ColorNotColliding);
 	}
 	if (m_bVisibleOBB)
 	{

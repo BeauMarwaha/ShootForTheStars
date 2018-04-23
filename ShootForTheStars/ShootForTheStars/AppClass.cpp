@@ -42,9 +42,12 @@ void Application::InitVariables(void)
 		// Move the star to the calculated position
 		matrix4 m4Position = glm::translate(v3Position);
 		m_pEntityMngr->SetModelMatrix(m4Position);
-		//m_pEntityMngr->UsePhysicsSolver();
+		m_pEntityMngr->UsePhysicsSolver();
 		//m_pEntityMngr->SetMass(i+1);
 	}
+
+	// Create them main timer clock
+	m_uMainClock = m_pSystem->GenClock();
 
 	// Initial set up for octree
 	m_uOctantLevels = 3; // Found to be the ideal octant depth level
@@ -76,6 +79,9 @@ void Application::Update(void)
 		// Clear current octant associations, regenerate octants, and then regenerate octant associations
 		m_pEntityMngr->UpdateOctantsAndDimensions(m_uOctantLevels);
 	}
+
+	// Remove Old Bullets
+	m_pEntityMngr->RemoveOldBullets(m_pSystem->GetTimeSinceStart(m_uMainClock));
 
 	//Update Entity Manager
 	m_pEntityMngr->Update();
@@ -123,6 +129,7 @@ void Application::ShootBullet(void)
 {
 	//Create a new Bullet Entity
 	m_pEntityMngr->AddEntity("Sorted\\PolyOut.obj", "Bullet_" + std::to_string(bulletCount));
+	m_pEntityMngr->GetEntity()->GetEntity("Bullet_" + std::to_string(bulletCount))->m_fTimeWhenShot = m_pSystem->GetTimeSinceStart(m_uMainClock);
 
 	//Move the bullet to the camera's current position
 	vector3 v3Position = m_pCameraMngr->GetPosition();

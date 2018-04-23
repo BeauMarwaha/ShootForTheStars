@@ -65,7 +65,9 @@ private:
 	sf::Music m_soundBGM; //background music
 
 	int bulletCount = 0; // The count of bullets currently in the level
-	vector3 m_v3FloorColor = vector3(222 / 256.0f, 184 / 256.0f, 135 / 256.0f); // RGB color value of the floor
+	vector3 m_v3FloorColor = vector3(0 / 256.0f, 139 / 256.0f, 139 / 256.0f); // RGB color value of the floor
+
+	uint m_uMainClock;
 
 public:
 #pragma region Constructor / Run / Destructor

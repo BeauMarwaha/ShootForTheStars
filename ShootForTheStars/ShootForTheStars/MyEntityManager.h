@@ -17,6 +17,8 @@ class MyEntityManager
 	uint m_uEntityCount = 0; //number of elements in the list
 	PEntity* m_mEntityArray = nullptr; //array of MyEntity pointers
 	static MyEntityManager* m_pInstance; // Singleton pointer
+
+	float m_fBulletLifetime = 6.0f; // Lifetime for a bullet
 public:
 	// Octant struct definition
 	struct Octant
@@ -402,6 +404,13 @@ public:
 	OUTPUT: ---
 	*/
 	void UsePhysicsSolver(bool a_bUse = true, uint a_uIndex = -1);
+	/*
+	USAGE: Removes Bullets from the manager that are older than a certain amount
+	ARGUMENTS:
+	-	float a_fTimeSinceStart -> time since the application started
+	OUTPUT: ---
+	*/
+	void RemoveOldBullets(float a_fTimeSinceStart);
 private:
 	/*
 	Usage: constructor
