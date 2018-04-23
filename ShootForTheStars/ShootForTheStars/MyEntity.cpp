@@ -328,6 +328,22 @@ void Simplex::MyEntity::Update(void)
 }
 void Simplex::MyEntity::ResolveCollision(MyEntity* a_pOther)
 {
+	// Check if it's a bullet that's hitting a star, if so enable the star's physics solver
+	std::string bulletPrefix = "Bullet";
+	std::string starPrefix = "Star";
+
+	// Check to see if the other object is a bullet or a star
+	if (a_pOther->GetUniqueID().compare(0, bulletPrefix.size(), bulletPrefix) == 0  || a_pOther->GetUniqueID().compare(0, starPrefix.size(), starPrefix) == 0)
+	{
+		// Check to see if this object is a star
+		if (this->GetUniqueID().compare(0, starPrefix.size(), starPrefix) == 0)
+		{
+			// Enable physics on the star
+			this->UsePhysicsSolver(true);
+			a_pOther->UsePhysicsSolver(true);
+		}
+	}
+
 	if (m_bUsePhysicsSolver)
 	{
 		m_pSolver->ResolveCollision(a_pOther->GetSolver());

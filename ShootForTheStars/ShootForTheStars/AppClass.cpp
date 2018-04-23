@@ -42,7 +42,7 @@ void Application::InitVariables(void)
 		// Move the star to the calculated position
 		matrix4 m4Position = glm::translate(v3Position);
 		m_pEntityMngr->SetModelMatrix(m4Position);
-		m_pEntityMngr->UsePhysicsSolver();
+		//m_pEntityMngr->UsePhysicsSolver();
 		//m_pEntityMngr->SetMass(i+1);
 		//float grav = -0.05f;
 		//m_pEntityMngr->SetGravity(grav,i+1);
