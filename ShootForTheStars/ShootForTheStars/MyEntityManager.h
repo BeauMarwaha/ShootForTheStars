@@ -27,6 +27,7 @@ public:
 		vector3 m_v3Min = vector3(0.0f); // Minimum point of the octant
 		vector3 m_v3Max = vector3(0.0f); // Maximum point of the octant
 		bool m_bIsEndNode; // Indicates wether this is an end node in the octree
+		//smelly boi dkjafbgladfj'gakdf
 	};
 
 	/*
@@ -386,6 +387,8 @@ public:
 	OUTPUT: ---
 	*/
 	void SetFriction(float a_fFriction, uint a_uIndex = -1);
+	void SetGravity(float a_fGravity, String a_sUniqueID);
+	void SetGravity(float a_fGravity, uint a_uIndex);
 	/*
 	USAGE: Sets the using physics solver flag for the specified object
 	ARGUMENTS:
