@@ -54,7 +54,16 @@ float MySolver::GetFriction(void) { return m_fFriction; }
 void MySolver::SetGravity(float a_fGravity) { m_fGravity = a_fGravity; }
 float MySolver::GetGravity(void) { return m_fGravity; }
 
+void Simplex::MySolver::SetBounce(float a_fBounce) { m_fBounce = a_fBounce; }
+float Simplex::MySolver::GetBounce(void){ return m_fBounce; }
+
 //Methods
+void Simplex::MySolver::Bounce(float bounce)
+{
+	m_v3Acceleration += vector3(0.0f, bounce, 0.0f) / m_fMass;
+
+	SetBounce(GetBounce() / 2.0);
+}
 void MySolver::ApplyFriction(float a_fFriction)
 {
 	if (a_fFriction < 0.01f)
@@ -104,14 +113,25 @@ void MySolver::Update(void)
 	m_v3Velocity = RoundSmallVelocity(m_v3Velocity, 0.028f);
 
 	m_v3Position += m_v3Velocity;
-			
+
 	if (m_v3Position.y <= 0)
 	{
-		m_v3Position.y = 0;
-		m_v3Velocity.y = 0;
+		if (m_fBounce > 0.0001)
+		{
+			m_v3Position.y = 0;
+			Bounce(m_fBounce);
+		}
+		else
+		{
+			m_v3Position.y = 0;
+			m_v3Velocity.y = 0;
+		}
 	}
 
-	m_v3Acceleration = ZERO_V3;
+	m_v3Acceleration.x = 0.0f;
+	m_v3Acceleration.z = 0.0f;
+
+	//m_v3Acceleration = ZERO_V3;
 }
 void MySolver::ResolveCollision(MySolver* a_pOther)
 {
