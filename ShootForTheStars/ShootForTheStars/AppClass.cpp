@@ -56,6 +56,9 @@ void Application::InitVariables(void)
 	m_pEntityMngr->GenerateOctants(m_uOctantLevels);
 	m_pEntityMngr->UpdateDimensionSetAll();
 
+	// Remove any stars that were generated as colliding at start
+	m_pEntityMngr->RemoveCollidingObjects();
+
 	// Initial update entity manager call
 	m_pEntityMngr->Update();
 }

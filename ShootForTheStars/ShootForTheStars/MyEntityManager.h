@@ -414,6 +414,12 @@ public:
 	OUTPUT: ---
 	*/
 	void RemoveOldBullets(float a_fTimeSinceStart);
+	/*
+	USAGE: Remove objects that are currently colliding until they are no longer colliding
+	ARGUMENTS: ---
+	OUTPUT: ---
+	*/
+	void RemoveCollidingObjects(void);
 private:
 	/*
 	Usage: constructor

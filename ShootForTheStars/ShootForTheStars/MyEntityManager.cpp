@@ -873,3 +873,35 @@ void Simplex::MyEntityManager::RemoveOldBullets(float a_fTimeSinceStart)
 		}
 	}
 }
+
+void Simplex::MyEntityManager::RemoveCollidingObjects(void)
+{
+	// Create vector of entities to remove
+	std::vector<MyEntity*> entitiesToRemove = std::vector<MyEntity*>();
+
+	//Check if 
+	for (uint i = 0; i < m_uEntityCount; i++)
+	{
+		for (uint j = i + 1; j < m_uEntityCount; j++)
+		{
+			// If objects are colliding add the first object to the list of entities to remove
+			if (m_mEntityArray[i]->IsColliding(m_mEntityArray[j]))
+			{
+				if (std::find(entitiesToRemove.begin(), entitiesToRemove.end(), m_mEntityArray[i]) != entitiesToRemove.end()) 
+				{
+					// If the entity is already in the vector of entities to remove do nothing
+				}
+				else {
+					// Otherwise add the entity to the vector of entities to remove
+					entitiesToRemove.push_back(m_mEntityArray[i]);
+				}
+			}
+		}
+	}
+
+	// Remove all entities in the entities to remove vector
+	for each (MyEntity* entity in entitiesToRemove)
+	{
+		RemoveEntity(entity->GetUniqueID());
+	}
+}
