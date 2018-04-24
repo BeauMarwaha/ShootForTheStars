@@ -66,6 +66,7 @@ private:
 
 	int bulletCount = 0; // The count of bullets currently in the level
 	vector3 m_v3FloorColor = vector3(0 / 256.0f, 139 / 256.0f, 139 / 256.0f); // RGB color value of the floor
+	vector3 m_v3GunColor = vector3(0 / 256.0f, 139 / 256.0f, 139 / 256.0f); // RGB color value of the gun
 
 	uint m_uMainClock;
 

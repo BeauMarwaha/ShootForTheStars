@@ -104,8 +104,18 @@ void Application::Display(void)
 	m_pEntityMngr->DisplayOctree(m_pMeshMngr, m_uOctantID);
 
 	// Create a floor under the player
-	matrix4 m4Scale = glm::translate(IDENTITY_M4, vector3(0, -2.1f, 0)) * ToMatrix4(glm::angleAxis(-90.0f, AXIS_X)) * glm::scale(vector3(1000.0f, 1000.0f, 1.0f));
-	m_pMeshMngr->AddPlaneToRenderList(m4Scale, m_v3FloorColor);
+	matrix4 m4Transform = glm::translate(IDENTITY_M4, vector3(0, -2.1f, 0)) * ToMatrix4(glm::angleAxis(-90.0f, AXIS_X)) * glm::scale(vector3(1000.0f, 1000.0f, 1.0f));
+	m_pMeshMngr->AddPlaneToRenderList(m4Transform, m_v3FloorColor);
+
+	// Render a gun for the character
+	vector3 initialVector = AXIS_X;
+	vector3 currentVector = m_pCameraMngr->GetForward();
+	float dot = initialVector.x * currentVector.x + initialVector.y * currentVector.y + initialVector.z * currentVector.z;    //between[x1, y1, z1] and [x2, y2, z2]
+	float lenSq1 = initialVector.x * initialVector.x + initialVector.y * initialVector.y + initialVector.z * initialVector.z;
+	float lenSq2 = currentVector.x * currentVector.x + currentVector.y * currentVector.y + currentVector.z * currentVector.z;
+	float angle = acos(dot / sqrt(lenSq1 * lenSq2));
+	m4Transform = glm::translate(IDENTITY_M4, (m_pCameraMngr->GetPosition() + m_pCameraMngr->GetForward() - (m_pCameraMngr->GetUpward() * 0.5f))) * ToMatrix4(glm::angleAxis(90.0f, AXIS_Z)) * ToMatrix4(glm::angleAxis(angle, AXIS_Z)) * glm::scale(vector3(0.5f, 0.5f, 0.5f));
+	m_pMeshMngr->AddTubeToRenderList(m4Transform, m_v3GunColor, RENDER_SOLID | RENDER_WIRE);
 
 	// draw a skybox
 	m_pMeshMngr->AddSkyboxToRenderList("Skybox_04.png");
