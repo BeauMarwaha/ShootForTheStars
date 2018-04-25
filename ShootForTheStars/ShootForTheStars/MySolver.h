@@ -18,7 +18,6 @@ class MySolver
 	float m_fMass = 1.0f; //Mass of the solver
 	float m_fFriction = 0.1f; //Power of the friction to be applied to the object
 	float m_fGravity = -0.035f; //Force of gravity
-	float m_fBounce = 10.0f;
 public:
 	/*
 	USAGE: Constructor
@@ -106,17 +105,6 @@ public:
 	void SetGravity(float a_fGravity);
 
 	float GetGravity(void);
-
-	void SetBounce(float a_fBounce);
-
-	float GetBounce(void);
-
-	/*
-	USAGE: Applies a bounce force on any object using the solver
-	ARGUMENTS: float Bounce force
-	OUTPUT: ---
-	*/
-	void Bounce(float bounce);
 
 	/*
 	USAGE: Applies friction to the movement
