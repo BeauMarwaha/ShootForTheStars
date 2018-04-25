@@ -108,14 +108,12 @@ void Application::Display(void)
 	m_pMeshMngr->AddPlaneToRenderList(m4Transform, m_v3FloorColor);
 
 	// Render a gun for the character
-	vector3 initialVector = AXIS_X;
-	vector3 currentVector = m_pCameraMngr->GetForward();
-	float dot = initialVector.x * currentVector.x + initialVector.y * currentVector.y + initialVector.z * currentVector.z;    //between[x1, y1, z1] and [x2, y2, z2]
-	float lenSq1 = initialVector.x * initialVector.x + initialVector.y * initialVector.y + initialVector.z * initialVector.z;
-	float lenSq2 = currentVector.x * currentVector.x + currentVector.y * currentVector.y + currentVector.z * currentVector.z;
-	float angle = acos(dot / sqrt(lenSq1 * lenSq2));
-	m4Transform = glm::translate(IDENTITY_M4, (m_pCameraMngr->GetPosition() + m_pCameraMngr->GetForward() - (m_pCameraMngr->GetUpward() * 0.5f))) * ToMatrix4(glm::angleAxis(90.0f, AXIS_Z)) * ToMatrix4(glm::angleAxis(angle, AXIS_Z)) * glm::scale(vector3(0.5f, 0.5f, 0.5f));
-	m_pMeshMngr->AddTubeToRenderList(m4Transform, m_v3GunColor, RENDER_SOLID | RENDER_WIRE);
+	matrix4 m4Position = glm::translate(IDENTITY_M4, (m_pCameraMngr->GetPosition() + m_pCameraMngr->GetForward() + (m_pCameraMngr->GetRightward() * 0.7f) - (m_pCameraMngr->GetUpward() * 0.5f)));
+	matrix4 m4InitialRotation = ToMatrix4(glm::angleAxis(90.0f, AXIS_X));
+	matrix4 m4CameraRotation = ToMatrix4(glm::angleAxis(m_fCameraYaw, AXIS_Z)) * ToMatrix4(glm::angleAxis(m_fCameraPitch, AXIS_X));
+	matrix4 m4Scale = glm::scale(vector3(0.5f, 8.0f, 0.5f));
+	m4Transform = m4Position * m4InitialRotation * m4CameraRotation * m4Scale;
+	m_pMeshMngr->AddTubeToRenderList(m4Transform, m_v3GunColor, RENDER_SOLID);
 
 	// draw a skybox
 	m_pMeshMngr->AddSkyboxToRenderList("Skybox_04.png");
@@ -147,7 +145,7 @@ void Application::ShootBullet(void)
 	m_pEntityMngr->GetEntity()->GetEntity("Bullet_" + std::to_string(bulletCount))->m_fTimeWhenShot = m_pSystem->GetTimeSinceStart(m_uMainClock);
 
 	//Move the bullet to the camera's current position
-	vector3 v3Position = m_pCameraMngr->GetPosition();
+	vector3 v3Position = m_pCameraMngr->GetPosition() + m_pCameraMngr->GetForward() + (m_pCameraMngr->GetRightward() * 0.7f) - (m_pCameraMngr->GetUpward());
 	matrix4 m4Position = glm::translate(IDENTITY_M4, v3Position);
 	//Move and Rotate the Bullet to match the camera(Rotation does not work with solver)
 	//matrix4 m4Position = glm::translate(IDENTITY_M4, v3Position) * ToMatrix4(glm::angleAxis(90.0f, glm::normalize(m_pCameraMngr->GetForward())));

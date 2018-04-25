@@ -66,9 +66,12 @@ private:
 
 	int bulletCount = 0; // The count of bullets currently in the level
 	vector3 m_v3FloorColor = vector3(0 / 256.0f, 139 / 256.0f, 139 / 256.0f); // RGB color value of the floor
-	vector3 m_v3GunColor = vector3(0 / 256.0f, 139 / 256.0f, 139 / 256.0f); // RGB color value of the gun
+	vector3 m_v3GunColor = vector3(41 / 256.0f, 46 / 256.0f, 55 / 256.0f); // RGB color value of the gun
 
-	uint m_uMainClock;
+	float m_fCameraYaw = 0.0f; // Yaw of the camera (used in gun rotation)
+	float m_fCameraPitch = 0.0f; // Pitch of the camera (used in gun rotation)
+
+	uint m_uMainClock; // Main Clock for the game (used for bullet deletion timing)
 
 public:
 #pragma region Constructor / Run / Destructor
