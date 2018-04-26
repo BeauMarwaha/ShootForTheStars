@@ -62,11 +62,11 @@ void Application::InitVariables(void)
 	m_pEntityMngr->RemoveCollidingObjects();
 
 	// initialize bg music
-	sf::Music bgMusic;
-	if (!bgMusic.openFromFile(""))
-	{
-		return; // an error has occured
-	}
+	//sf::Music bgMusic;
+	//if (!bgMusic.openFromFile(""))
+	//{
+	//	return; // an error has occured
+	//}
 	//bgMusic.play();
 
 	// Initial update entity manager call
@@ -174,13 +174,13 @@ void Application::ShootBullet(void)
 
 	// load bullet sound effect from sound buffer
 	// sf::Sound allows for layering of sounds! sf::Music does not
-	sf::SoundBuffer bBuffer;
+	/*sf::SoundBuffer bBuffer;
 	if (!bBuffer.loadFromFile(""));
 	{
 		return;
 	}
 
 	sf::Sound bSFX;
-	bSFX.setBuffer(bBuffer);
+	bSFX.setBuffer(bBuffer);*/
 	//bSFX.play();
 }
