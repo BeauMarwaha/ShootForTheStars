@@ -1,4 +1,6 @@
 #include "AppClass.h"
+#include <SFML\Audio.hpp>
+
 using namespace Simplex;
 void Application::InitVariables(void)
 {
@@ -17,7 +19,7 @@ void Application::InitVariables(void)
 #ifdef DEBUG
 	uint uInstances = 400;
 #else
-	uint uInstances = 1000;
+	uint uInstances = 9000;
 #endif
 	// Generate Stars in a random half sphere around the player
 	for (uint i = 0; i < uInstances; i++)
@@ -58,6 +60,14 @@ void Application::InitVariables(void)
 
 	// Remove any stars that were generated as colliding at start
 	m_pEntityMngr->RemoveCollidingObjects();
+
+	// initialize bg music
+	sf::Music bgMusic;
+	if (!bgMusic.openFromFile(""))
+	{
+		return; // an error has occured
+	}
+	//bgMusic.play();
 
 	// Initial update entity manager call
 	m_pEntityMngr->Update();
@@ -161,4 +171,16 @@ void Application::ShootBullet(void)
 	m_pEntityMngr->GetEntity()->GetEntity("Bullet_" + std::to_string(bulletCount))->GetSolver()->ApplyForce(force);
 
 	bulletCount++;
+
+	// load bullet sound effect from sound buffer
+	// sf::Sound allows for layering of sounds! sf::Music does not
+	sf::SoundBuffer bBuffer;
+	if (!bBuffer.loadFromFile(""));
+	{
+		return;
+	}
+
+	sf::Sound bSFX;
+	bSFX.setBuffer(bBuffer);
+	//bSFX.play();
 }

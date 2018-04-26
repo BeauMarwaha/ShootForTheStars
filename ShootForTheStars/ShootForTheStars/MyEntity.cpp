@@ -1,6 +1,7 @@
 #include "MyEntity.h"
 using namespace Simplex;
 std::map<String, MyEntity*> MyEntity::m_IDMap;
+
 //  Accessors
 Simplex::MySolver* Simplex::MyEntity::GetSolver(void) { return m_pSolver; }
 bool Simplex::MyEntity::HasThisRigidBody(MyRigidBody* a_pRigidBody) { return m_pRigidBody == a_pRigidBody; }
