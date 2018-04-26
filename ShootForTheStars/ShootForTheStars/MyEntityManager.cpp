@@ -905,3 +905,20 @@ void Simplex::MyEntityManager::RemoveCollidingObjects(void)
 		RemoveEntity(entity->GetUniqueID());
 	}
 }
+
+void Simplex::MyEntityManager::DropAllStars(void)
+{
+	// Define the star ID prefix
+	std::string prefix = "Star";
+
+	// Check all entities
+	for (uint i = 0; i < m_uEntityCount; i++)
+	{
+		// Check to see if this entity is a star
+		if (m_mEntityArray[i]->GetUniqueID().compare(0, prefix.size(), prefix) == 0)
+		{
+			// Enable physics for the star
+			m_mEntityArray[i]->UsePhysicsSolver();
+		}
+	}
+}

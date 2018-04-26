@@ -49,6 +49,8 @@ void Application::DrawGUI(void)
 			ImGui::Separator();
 			ImGui::Text("	  -: Increment Octree subdivision\n");
 			ImGui::Text("	  +: Decrement Octree subdivision\n");
+			ImGui::Separator();
+			ImGui::Text("	  X: Drop all stars\n");
 			/*ImGui::Text("	 F1: Perspective\n");
 			ImGui::Text("	 F2: Orthographic X\n");
 			ImGui::Text("	 F3: Orthographic Y\n");

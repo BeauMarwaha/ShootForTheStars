@@ -163,6 +163,10 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 			m_pEntityMngr->UpdateOctantsAndDimensions(m_uOctantLevels);
 		}
 		break;
+	case sf::Keyboard::X:
+		// Drop all stars
+		m_pEntityMngr->DropAllStars();
+		break;
 	}
 
 	//gui

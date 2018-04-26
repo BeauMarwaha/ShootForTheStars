@@ -46,8 +46,8 @@ void Application::InitVariables(void)
 		m_pEntityMngr->SetModelMatrix(m4Position);
 		//m_pEntityMngr->UsePhysicsSolver();
 		//m_pEntityMngr->SetMass(i+1);
-		//float grav = -0.05f;
-		//m_pEntityMngr->SetGravity(grav,i+1);
+		float grav = -0.05f;
+		m_pEntityMngr->SetGravity(grav,i+1);
 	}
 
 	// Create them main timer clock
@@ -89,7 +89,7 @@ void Application::Update(void)
 	if (m_pSystem->IsTimerDone(nClock) || !bStarted)
 	{
 		bStarted = true;
-		m_pSystem->StartTimerOnClock(0.1, nClock);
+		m_pSystem->StartTimerOnClock(0.05, nClock);
 
 		// Clear current octant associations, regenerate octants, and then regenerate octant associations
 		m_pEntityMngr->UpdateOctantsAndDimensions(m_uOctantLevels);

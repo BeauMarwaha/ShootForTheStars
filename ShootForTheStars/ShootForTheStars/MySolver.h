@@ -18,6 +18,8 @@ class MySolver
 	float m_fMass = 1.0f; //Mass of the solver
 	float m_fFriction = 0.1f; //Power of the friction to be applied to the object
 	float m_fGravity = -0.035f; //Force of gravity
+
+	uint m_uTimesBounced = 1; // Number of times the ball has bounced
 public:
 	/*
 	USAGE: Constructor

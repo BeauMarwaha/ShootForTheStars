@@ -96,13 +96,14 @@ void MySolver::Update(void)
 	ApplyFriction(m_fFriction);
 	m_v3Velocity = RoundSmallVelocity(m_v3Velocity, 0.03f);
 
-	if(m_v3Position.y > 0)
-		ApplyForce(vector3(0.0f, m_fGravity, 0.0f));
-	else if (m_v3Position.y < 0)
-		ApplyForce(vector3(0.0f, -2.0f * m_fGravity, 0.0f));
-	else
+	if (m_v3Position.y > .5)
 	{
-		m_v3Acceleration = ZERO_V3;
+		ApplyForce(vector3(0.0f, m_fGravity, 0.0f));
+	}
+	else if (m_v3Position.y < 0)
+	{
+		ApplyForce(vector3(0.0f, (-40.0f / m_uTimesBounced) * m_fGravity, 0.0f));
+		m_uTimesBounced++;
 	}
 
 	m_v3Velocity += m_v3Acceleration;
