@@ -420,6 +420,13 @@ public:
 	OUTPUT: ---
 	*/
 	void RemoveCollidingObjects(void);
+	/*
+	USAGE: Enables the physics on all star objects causing them to all start to fall
+	ARGUMENTS: ---
+	OUTPUT: ---
+	*/
+	void DropAllStars(void);
+	
 private:
 	/*
 	Usage: constructor
